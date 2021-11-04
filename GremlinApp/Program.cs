@@ -4,7 +4,7 @@ using Gremlin.Net.Driver;
 using Gremlin.Net.Driver.Exceptions;
 using Gremlin.Net.Structure.IO.GraphSON;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
+using Newtonsoft.Json;
 
 namespace GremlinApp
 {
@@ -38,6 +38,11 @@ namespace GremlinApp
                     {
                         var resultSet = AzureAsync(gremlinClient, args[0]);
                         Console.WriteLine("\n{{\"Returned\": \"{0}\"}}", resultSet.Result.Count);
+                        foreach (var result in resultSet.Result)
+                        {
+                            string jsonOutput = JsonConvert.SerializeObject(result);
+                            Console.WriteLine("{0}", jsonOutput);
+                        }
                     }
                 }
             }
